@@ -1,0 +1,59 @@
+[gd_scene load_steps=9 format=3 uid="uid://bhfv8yeg3fqhd"]
+
+[ext_resource type="ArrayMesh" uid="uid://c460d06bhwihd" path="res://Voxel Spaceships/obj/Spaceship1.obj" id="1_o1imd"]
+[ext_resource type="Script" uid="uid://peaemmqlkvcc" path="res://Scripts/MovementShip.gd" id="2_xkgb4"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_5s1s6"]
+emission_enabled = true
+emission = Color(0.0156863, 1, 0, 1)
+emission_energy_multiplier = 5.0
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_o1imd"]
+material = SubResource("StandardMaterial3D_5s1s6")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_xkgb4"]
+emission_enabled = true
+emission = Color(1, 0, 0, 1)
+emission_energy_multiplier = 5.0
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_845t4"]
+material = SubResource("StandardMaterial3D_xkgb4")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_nr6tx"]
+emission_enabled = true
+emission = Color(0, 0, 1, 1)
+emission_energy_multiplier = 5.0
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_70jup"]
+material = SubResource("StandardMaterial3D_nr6tx")
+
+[node name="References" type="Node3D"]
+
+[node name="Y" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 20, 0, 0, 0, 1, 0, 0, 0)
+mesh = SubResource("CylinderMesh_o1imd")
+
+[node name="X" type="MeshInstance3D" parent="."]
+transform = Transform3D(-4.37114e-08, -20, 0, 1, -8.74228e-07, 0, 0, 0, 1, 0, 0, 0)
+mesh = SubResource("CylinderMesh_845t4")
+skeleton = NodePath("../Y")
+
+[node name="Z" type="MeshInstance3D" parent="."]
+transform = Transform3D(1.91069e-15, 8.74228e-07, 1, 1, -8.74228e-07, 0, 4.37114e-08, 20, -4.37114e-08, 0, 0, 0)
+mesh = SubResource("CylinderMesh_70jup")
+skeleton = NodePath("../Y")
+
+[node name="SpaceShip" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.21195, 9.11425, 10.8857)
+script = ExtResource("2_xkgb4")
+
+[node name="ShipMesh" type="MeshInstance3D" parent="SpaceShip"]
+transform = Transform3D(-0.999625, 0, 0.0273808, 0, 1, 0, -0.0273808, 0, -0.999625, 0, 0, 0)
+mesh = ExtResource("1_o1imd")
+skeleton = NodePath("../..")
+
+[node name="Camera3D" type="Camera3D" parent="SpaceShip"]
+transform = Transform3D(0.999625, 0.00735357, -0.0263747, -2.34789e-08, 0.963261, 0.268567, 0.0273807, -0.268466, 0.9629, -0.196888, 3.15695, 7.18809)
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.658466, -0.481551, 0.578386, 1.29308e-08, 0.768507, 0.639841, -0.75261, 0.421314, -0.506036, 0, 24.3494, 0)
