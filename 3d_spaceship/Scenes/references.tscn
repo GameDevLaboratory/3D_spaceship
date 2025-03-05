@@ -1,7 +1,8 @@
-[gd_scene load_steps=9 format=3 uid="uid://bhfv8yeg3fqhd"]
+[gd_scene load_steps=13 format=3 uid="uid://bhfv8yeg3fqhd"]
 
 [ext_resource type="ArrayMesh" uid="uid://c460d06bhwihd" path="res://Voxel Spaceships/obj/Spaceship1.obj" id="1_o1imd"]
 [ext_resource type="Script" uid="uid://peaemmqlkvcc" path="res://Scripts/MovementShip.gd" id="2_xkgb4"]
+[ext_resource type="Texture2D" uid="uid://cwytt1h875r47" path="res://Sprites/sky.jpg" id="3_845t4"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_5s1s6"]
 emission_enabled = true
@@ -27,19 +28,29 @@ emission_energy_multiplier = 5.0
 [sub_resource type="CylinderMesh" id="CylinderMesh_70jup"]
 material = SubResource("StandardMaterial3D_nr6tx")
 
-[node name="References" type="Node3D"]
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_nr6tx"]
+panorama = ExtResource("3_845t4")
+
+[sub_resource type="Sky" id="Sky_70jup"]
+sky_material = SubResource("PanoramaSkyMaterial_nr6tx")
+
+[sub_resource type="Environment" id="Environment_xkgb4"]
+background_mode = 2
+sky = SubResource("Sky_70jup")
+
+[node name="World" type="Node3D"]
 
 [node name="Y" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 20, 0, 0, 0, 1, 0, 0, 0)
+transform = Transform3D(1, 0, 0, 0, 2000, 0, 0, 0, 1, 0, 0, 0)
 mesh = SubResource("CylinderMesh_o1imd")
 
 [node name="X" type="MeshInstance3D" parent="."]
-transform = Transform3D(-4.37114e-08, -20, 0, 1, -8.74228e-07, 0, 0, 0, 1, 0, 0, 0)
+transform = Transform3D(-4.37114e-08, -2000, 0, 1, -8.74228e-05, 0, 0, 0, 1, 0, 0, 0)
 mesh = SubResource("CylinderMesh_845t4")
 skeleton = NodePath("../Y")
 
 [node name="Z" type="MeshInstance3D" parent="."]
-transform = Transform3D(1.91069e-15, 8.74228e-07, 1, 1, -8.74228e-07, 0, 4.37114e-08, 20, -4.37114e-08, 0, 0, 0)
+transform = Transform3D(1.91069e-15, 8.74228e-05, 1, 1, -8.74228e-05, -3.4446e-21, 4.37114e-08, 2000, -4.37114e-08, 0, 0, 0)
 mesh = SubResource("CylinderMesh_70jup")
 skeleton = NodePath("../Y")
 
@@ -47,13 +58,16 @@ skeleton = NodePath("../Y")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.21195, 9.11425, 10.8857)
 script = ExtResource("2_xkgb4")
 
+[node name="Camera3D" type="Camera3D" parent="SpaceShip"]
+transform = Transform3D(0.999625, 0.00735357, -0.0263748, -2.34789e-08, 0.963261, 0.268567, 0.0273807, -0.268466, 0.9629, -0.196888, 3.77768, 7.87308)
+
 [node name="ShipMesh" type="MeshInstance3D" parent="SpaceShip"]
 transform = Transform3D(-0.999625, 0, 0.0273808, 0, 1, 0, -0.0273808, 0, -0.999625, 0, 0, 0)
 mesh = ExtResource("1_o1imd")
 skeleton = NodePath("../..")
 
-[node name="Camera3D" type="Camera3D" parent="SpaceShip"]
-transform = Transform3D(0.999625, 0.00735357, -0.0263747, -2.34789e-08, 0.963261, 0.268567, 0.0273807, -0.268466, 0.9629, -0.196888, 3.15695, 7.18809)
-
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(-0.658466, -0.481551, 0.578386, 1.29308e-08, 0.768507, 0.639841, -0.75261, 0.421314, -0.506036, 0, 24.3494, 0)
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_xkgb4")

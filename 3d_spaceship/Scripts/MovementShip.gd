@@ -21,6 +21,10 @@ var vertical_acceleration : float = 6.0
 var rotation_x : float = 0.0
 var rotation_y : float = 0.0
 
+# Variables adicionales para sprint
+var sprint_multiplier : float = 5.0
+var sprint_acceleration_multiplier : float = 10.0
+
 func _ready() -> void:
 	# Capturar el ratón
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
@@ -30,7 +34,7 @@ func _input(event: InputEvent) -> void:
 		# Capturar el movimiento del ratón
 		rotation_y -= event.relative.x * mouse_sensitivity
 		rotation_x -= event.relative.y * mouse_sensitivity
-		
+
 		# Limitar la inclinación (ángulo en el eje X) para evitar voltear la nave
 		rotation_x = clamp(rotation_x, -45.0, 45.0)
 
@@ -38,9 +42,19 @@ func _input(event: InputEvent) -> void:
 		rotation_degrees = Vector3(rotation_x, rotation_y, 0)
 
 func _process(delta: float) -> void:
+	if Input.is_action_pressed("exit"):
+		get_tree().quit()
+		
 	# Controlar la velocidad hacia adelante y atrás con W y S
+	var current_max_speed = max_speed
+	var current_acceleration = acceleration
+
+	if Input.is_action_pressed("spreen"): # Acción de sprint
+		current_max_speed *= sprint_multiplier
+		current_acceleration *= sprint_acceleration_multiplier
+
 	if Input.is_action_pressed("move_forward"): # Tecla W
-		forward_speed += acceleration * delta
+		forward_speed += current_acceleration * delta
 	elif Input.is_action_pressed("move_backward"): # Tecla S
 		forward_speed -= deceleration * delta
 	else:
@@ -63,7 +77,7 @@ func _process(delta: float) -> void:
 		vertical_speed = lerp(vertical_speed, 0.0, 0.1)
 
 	# Limitar las velocidades máximas
-	forward_speed = clamp(forward_speed, -max_speed, max_speed)
+	forward_speed = clamp(forward_speed, -current_max_speed, current_max_speed)
 	lateral_speed = clamp(lateral_speed, -max_lateral_speed, max_lateral_speed)
 	vertical_speed = clamp(vertical_speed, -max_vertical_speed, max_vertical_speed)
 
