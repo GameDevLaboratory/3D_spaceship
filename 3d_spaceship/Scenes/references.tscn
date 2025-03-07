@@ -1,8 +1,9 @@
-[gd_scene load_steps=13 format=3 uid="uid://bhfv8yeg3fqhd"]
+[gd_scene load_steps=15 format=3 uid="uid://bhfv8yeg3fqhd"]
 
-[ext_resource type="ArrayMesh" uid="uid://c460d06bhwihd" path="res://Voxel Spaceships/obj/Spaceship1.obj" id="1_o1imd"]
+[ext_resource type="Texture2D" uid="uid://d2cwpmgo1e5g0" path="res://Spaceship/shaded.png" id="2_nr6tx"]
 [ext_resource type="Script" uid="uid://peaemmqlkvcc" path="res://Scripts/MovementShip.gd" id="2_xkgb4"]
-[ext_resource type="Texture2D" uid="uid://cwytt1h875r47" path="res://Sprites/sky.jpg" id="3_845t4"]
+[ext_resource type="ArrayMesh" uid="uid://b5psp38r55fd" path="res://Spaceship/base.obj" id="3_70jup"]
+[ext_resource type="Texture2D" uid="uid://bso1ut3jv2dva" path="res://Sprites/hdr_high.png" id="3_845t4"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_5s1s6"]
 emission_enabled = true
@@ -27,6 +28,9 @@ emission_energy_multiplier = 5.0
 
 [sub_resource type="CylinderMesh" id="CylinderMesh_70jup"]
 material = SubResource("StandardMaterial3D_nr6tx")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_vqctl"]
+albedo_texture = ExtResource("2_nr6tx")
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_nr6tx"]
 panorama = ExtResource("3_845t4")
@@ -59,15 +63,17 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.21195, 9.11425, 10.8857)
 script = ExtResource("2_xkgb4")
 
 [node name="Camera3D" type="Camera3D" parent="SpaceShip"]
-transform = Transform3D(0.999625, 0.00735357, -0.0263748, -2.34789e-08, 0.963261, 0.268567, 0.0273807, -0.268466, 0.9629, -0.196888, 3.77768, 7.87308)
+transform = Transform3D(0.999625, 0.00735356, -0.0263748, -0.00834196, 0.999259, -0.0375628, 0.026079, 0.0377688, 0.998946, 0, 0.759292, 1.99108)
 
-[node name="ShipMesh" type="MeshInstance3D" parent="SpaceShip"]
-transform = Transform3D(-0.999625, 0, 0.0273808, 0, 1, 0, -0.0273808, 0, -0.999625, 0, 0, 0)
-mesh = ExtResource("1_o1imd")
+[node name="Base" type="MeshInstance3D" parent="SpaceShip"]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)
+material_override = SubResource("StandardMaterial3D_vqctl")
+mesh = ExtResource("3_70jup")
 skeleton = NodePath("../..")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(-0.658466, -0.481551, 0.578386, 1.29308e-08, 0.768507, 0.639841, -0.75261, 0.421314, -0.506036, 0, 24.3494, 0)
+transform = Transform3D(0.696389, -0.459192, 0.551531, 4.52985e-09, 0.768507, 0.639841, -0.717664, -0.445579, 0.53518, 0, 24.3494, 0)
+light_color = Color(1, 1, 0.819608, 1)
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_xkgb4")

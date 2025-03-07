@@ -23,7 +23,7 @@ var rotation_y : float = 0.0
 
 # Variables adicionales para sprint
 var sprint_multiplier : float = 5.0
-var sprint_acceleration_multiplier : float = 10.0
+var sprint_acceleration_multiplier : float = 20.0
 
 func _ready() -> void:
 	# Capturar el ratón
